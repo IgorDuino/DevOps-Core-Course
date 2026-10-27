@@ -1,0 +1,15 @@
+# syntax=docker/dockerfile:1
+FROM python:3.14.7-slim AS builder
+WORKDIR /builder
+COPY requirements.txt .
+RUN pip install --no-cache-dir --prefix=/install -r requirements.txt
+
+FROM python:3.14.7-slim AS runtime
+RUN useradd --uid 10001 --no-create-home --shell /usr/sbin/nologin app && python -m pip uninstall -y pip
+WORKDIR /app
+COPY --from=builder /install /usr/local
+COPY . .
+USER 10001
+EXPOSE 5000
+HEALTHCHECK CMD ["python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/health', timeout=2)"]
+CMD ["python3", "app.py"]
