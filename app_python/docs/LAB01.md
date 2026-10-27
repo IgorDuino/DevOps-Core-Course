@@ -144,3 +144,7 @@ The suggested ports were busy on my Mac. I checked which ports were in use and c
 IgorDuino
 
 Stars show maintainers that people like their project and help others find it. Following developers helps me discover their projects and learn from their work. I starred both repositories, but my GitHub token could not follow users, so that step is still pending.
+
+## Bonus: Artifact Size
+
+On my Mac, `du -sh app_python/venv` showed **19M** and `ls -lh app_go/devops-info` showed **9.0M** (built with `CGO_ENABLED=0`).
